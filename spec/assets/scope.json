@@ -1,0 +1,91 @@
+{
+  "pi2_group_entity_characteristics": [
+    {
+      "entity_id": "E1",
+      "is_group_entity": true,
+      "group_entity_name": "E1",
+      "group_entity_base_type": "Permanent Establishment",
+      "consolidation_method": "Equity",
+      "is_main_upe": true,
+      "151_special_activity": "Governmental Entity",
+      "152ai_criterium": false,
+      "152aii_criterium": false,
+      "152b_criterium": false,
+      "state_of_election_of_153": false,
+      "ownership_interest_total": 100,
+      "ownership_globe_scope": true
+    },
+    {
+      "entity_id": "E2",
+      "is_group_entity": true,
+      "group_entity_name": "E2",
+      "group_entity_base_type": "Permanent Establishment",
+      "consolidation_method": "Equity",
+      "is_main_upe": false,
+      "151_special_activity": "None",
+      "152ai_criterium": false,
+      "152aii_criterium": false,
+      "152b_criterium": false,
+      "state_of_election_of_153": false,
+      "ownership_interest_total": 100,
+      "ownership_globe_scope": true
+    },
+    {
+      "entity_id": "E3",
+      "is_group_entity": true,
+      "group_entity_name": "E3",
+      "group_entity_base_type": "Permanent Establishment",
+      "consolidation_method": "FULL",
+      "is_main_upe": false,
+      "151_special_activity": "None",
+      "152ai_criterium": false,
+      "152aii_criterium": false,
+      "152b_criterium": false,
+      "state_of_election_of_153": false,
+      "ownership_interest_total": 100,
+      "ownership_globe_scope": true
+    },
+    {
+      "entity_id": "E4",
+      "is_group_entity": true,
+      "group_entity_name": "E4",
+      "group_entity_base_type": "Permanent Establishment",
+      "consolidation_method": "FULL",
+      "is_main_upe": false,
+      "151_special_activity": "None",
+      "152ai_criterium": false,
+      "152aii_criterium": false,
+      "152b_criterium": false,
+      "state_of_election_of_153": false,
+      "ownership_interest_total": 100,
+      "ownership_globe_scope": true
+    }
+  ],
+  "pi2_jurisdiction": [
+    {
+      "82_safe_harbour_choice": false
+    }
+  ],
+  "pi2_ownership_interests": [
+    {
+      "subsidiary_group_entity": "E2",
+      "owner": "E1",
+      "ownership_interest_number_of_shares": 50
+    },
+    {
+      "subsidiary_group_entity": "E3",
+      "owner": "E1",
+      "ownership_interest_number_of_shares": 96
+    },
+    {
+      "subsidiary_group_entity": "E4",
+      "owner": "E1",
+      "ownership_interest_number_of_shares": 5
+    },
+    {
+      "subsidiary_group_entity": "E4",
+      "owner": "E3",
+      "ownership_interest_number_of_shares": 80
+    }
+  ]
+}
