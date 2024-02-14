@@ -36,7 +36,7 @@ export class SafeHarbour {
 
     constructor(inputJson: InputSafeHarbourSource, private _scope: Scope, private _year: number) {
         this._safeHarbourEntries = inputJson.pi2_safe_harbour_entries;
-        this._safeHarbourEntries.forEach(safeHarbourEntry => {
+        this._safeHarbourEntries?.forEach(safeHarbourEntry => {
             const entity = this._scope.entityList.find(entity => entity.entity_id === safeHarbourEntry.entity_id)
             if (entity) {
                 this._entitySafeHarbourEntry.set(entity, safeHarbourEntry);
