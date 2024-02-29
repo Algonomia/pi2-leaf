@@ -1,3 +1,6 @@
+import {Matrix} from "mathjs";
+import {Entity, OwnershipOut} from "~/controllers/scope/scope.interface";
+
 export const reverseMapping = (o: Map<any, any>): Map<any, any[]> => {
     const result = new Map<any, any>();
     o.forEach((val, key) => {
@@ -65,4 +68,23 @@ export function getValueFromKeyIfTypeCompatible<T>(key: string, jsonObject: {[ke
         }
     }
     return <T>jsonObject[key];
+}
+
+export interface OwnershipLike {owner: string, subsidiary_group_entity: string};
+
+export function matrixToOwnershipLikeOut<T extends OwnershipLike>(matrix: Matrix, key: keyof T, ownershipOuts: Map<string, OwnershipLike>, entityList: Entity[], filterValue = 0) {
+    // @ts-ignore
+    matrix.forEach((value, index:  [number, number]) => {
+        if (value !== filterValue && entityList[index[0]] && entityList[index[1]]) {
+            const k = index[0].toString() + '|' + index[1].toString();
+            if (!ownershipOuts.has(k)) {
+                ownershipOuts.set(k, {
+                    owner: entityList[index[0]].entity_id,
+                    subsidiary_group_entity: entityList[index[1]].entity_id
+                });
+            }
+            // @ts-ignore
+            ownershipOuts.get(k)[key] = value;
+        }
+    });
 }

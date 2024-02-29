@@ -105,7 +105,7 @@ export class SafeHarbour {
     private async _setCBCRDeMinimis() {
         this._CBCRDeMinimisSafeHarbour = new Map<Entity, number>();
         (await this._getCBCREntitiesGroup()).forEach(group => {
-            if (group.election?.exclusion_de_minimis) {
+            if (true || group.election?.exclusion_de_minimis) {
                 const totalRevenueDiff = this._thresholdRelativeDiff(this._totalForKey(group.entities, 'total_revenue'), SafeHarbour._CBCRSafeHarbourTotalRevenueThreshold);
                 if (totalRevenueDiff <= 0) {
                     return;
@@ -132,7 +132,7 @@ export class SafeHarbour {
                 throw new Error('No TEI test threshold for year: "' + this._year);
             }
             const relativeDiff = this._thresholdRelativeDiff(totalSimplifiedCoveredTax/totalPBT, <number>SafeHarbour._CBCRSafeHarbourTEITestThreshold.get(this._year));
-            if (relativeDiff > 0) {
+            if (relativeDiff < 0) {
                 group.entities.forEach(entity => this._CBCRTEITestSafeHarbour.set(entity, relativeDiff));
             }
         });

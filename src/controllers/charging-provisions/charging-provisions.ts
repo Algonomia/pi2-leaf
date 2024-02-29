@@ -12,7 +12,11 @@ import {
 } from "../scope/scope.interface";
 import {first, lastValueFrom, ReplaySubject} from "rxjs";
 import {TopUpTaxComputation} from "../top-up-tax-computation/top-up-tax-computation";
-import {ChargingProvisionsOutput} from "~/controllers/charging-provisions/charging-provisions.interface";
+import {
+    AllocableSharesOutput,
+    ChargingProvisionsOutput
+} from "../../controllers/charging-provisions/charging-provisions.interface";
+import {matrixToOwnershipLikeOut} from "../../utils/common";
 
 export class ChargingProvisions {
 
@@ -358,6 +362,13 @@ export class ChargingProvisions {
     }
 
     // Out
+
+    public async getAllocableSharesOut(): Promise<AllocableSharesOutput[]> {
+        const allocableSharesOutput = new Map<string, AllocableSharesOutput>();
+        const allShareWithOffsetMatrix = await this._getAllShareWithOffsetMatrix();
+        matrixToOwnershipLikeOut<AllocableSharesOutput>(allShareWithOffsetMatrix, 'allocable_share', allocableSharesOutput, this._scope.entityList);
+        return [...allocableSharesOutput.values()];
+    }
 
     public async getChargingProvisionsOut(): Promise<ChargingProvisionsOutput[]> {
         const ipes = await this._getIPEs();

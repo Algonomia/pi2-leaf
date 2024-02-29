@@ -156,6 +156,7 @@ app.post('/getAll', async function(req, res, next) {
                 tut: await tutComputation.getTUTOut(),
                 elections: await chargingProvisions.getElectionsOut(),
                 chargingProvisions: await chargingProvisions.getChargingProvisionsOut(),
+                allocableShares: await chargingProvisions.getAllocableSharesOut(),
                 ownerships: await scope.getOwnershipOut(),
                 entitiesWithNoUPE: brokenChains.entitiesWithNoUPE,
                 entitiesInGroupNotInUPE: brokenChains.entitiesInGroupNotInUPE,

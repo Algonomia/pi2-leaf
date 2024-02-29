@@ -63,7 +63,7 @@ export interface ElectionOut extends Election {
     utpr?: number
 }
 
-export interface OwnershipOut extends Ownership{
+export interface OwnershipOut extends Ownership {
     indirect_ownership_percent?: number;
     controlling_interest?: number;
     degree_parentality_min?: number;

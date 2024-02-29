@@ -18,7 +18,7 @@ import {execSync} from "child_process";
 import events from "node:events";
 import {ElementaryCircuitsDirected} from "../../utils/elementary-circuits-directed";
 import {first, lastValueFrom, ReplaySubject} from "rxjs";
-import {reverseMapping} from "../../utils/common";
+import {matrixToOwnershipLikeOut, reverseMapping} from "../../utils/common";
 
 const readline = require('readline');
 
@@ -745,31 +745,14 @@ export class Scope {
     public async getOwnershipOut(): Promise<OwnershipOut[]> {
         const ownershipOuts = new Map<string, OwnershipOut>();
         const detentionMatrix = await this.getDetentionMatrix();
-        this._matrixToOwnershipOut(detentionMatrix, 'indirect_ownership_percent', ownershipOuts);
+        matrixToOwnershipLikeOut<OwnershipOut>(detentionMatrix, 'indirect_ownership_percent', ownershipOuts, this.entityList);
         const controllingInterestsMatrix = await this.getControllingInterestMatrix();
-        this._matrixToOwnershipOut(controllingInterestsMatrix, 'controlling_interest', ownershipOuts);
+        matrixToOwnershipLikeOut<OwnershipOut>(controllingInterestsMatrix, 'controlling_interest', ownershipOuts, this.entityList);
         const degreeParentalityMatrixMin = this.getDegreeParentalityMatrix('min');
-        this._matrixToOwnershipOut(degreeParentalityMatrixMin, 'degree_parentality_min', ownershipOuts, -1);
+        matrixToOwnershipLikeOut<OwnershipOut>(degreeParentalityMatrixMin, 'degree_parentality_min', ownershipOuts, this.entityList, -1);
         const degreeParentalityMatrixMax = await this.getDegreeParentalityMatrix('max');
-        this._matrixToOwnershipOut(degreeParentalityMatrixMax, 'degree_parentality_max', ownershipOuts, -1);
+        matrixToOwnershipLikeOut<OwnershipOut>(degreeParentalityMatrixMax, 'degree_parentality_max', ownershipOuts, this.entityList, -1);
         return [...ownershipOuts.values()];
-    }
-
-    private _matrixToOwnershipOut(matrix: Matrix, key: keyof OwnershipOut, ownershipOuts: Map<string, OwnershipOut>, filterValue = 0) {
-        // @ts-ignore
-        matrix.forEach((value, index:  [number, number]) => {
-            if (value !== filterValue && this.entityList[index[0]] && this.entityList[index[1]]) {
-                const k = index[0].toString() + '|' + index[1].toString();
-                if (!ownershipOuts.has(k)) {
-                    ownershipOuts.set(k, {
-                        owner: this.entityList[index[0]].entity_id,
-                        subsidiary_group_entity: this.entityList[index[1]].entity_id
-                    });
-                }
-                // @ts-ignore
-                ownershipOuts.get(k)[key] = value;
-            }
-        });
     }
 
 }

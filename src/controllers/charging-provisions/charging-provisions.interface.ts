@@ -8,3 +8,9 @@ export interface ChargingProvisionsOutput {
     top_up_tax_to_pay: number,
     utpr_contribution: number
 }
+
+export interface AllocableSharesOutput {
+    owner: string,
+    subsidiary_group_entity: string,
+    allocable_share: number
+}
